@@ -1,15 +1,10 @@
 package com.example.administrador.myapplication;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -20,16 +15,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView minhaView = (TextView)findViewById(R.id.textView);
-        minhaView.setText("Teste do texto");
+        List<Client> clients = getClients();
 
-        Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Cliquei!!!", Toast.LENGTH_LONG).show();
+        ListView listViewClients = (ListView) findViewById(R.id.listViewClients);
 
-            }
-        });
+        ClientListAdapter clientAdapter = new ClientListAdapter(MainActivity.this, clients);
+
+        listViewClients.setAdapter(clientAdapter);
+    }
+
+    private List<Client> getClients(){
+        List<Client> clients = new ArrayList<>();
+
+        Client renan = new Client();
+        renan.setName("Renan");
+        renan.setAge(23);
+
+        Client valdeco = new Client();
+        valdeco.setName("Luiz");
+        valdeco.setAge(26);
+
+
+        clients.add(renan);
+        clients.add(valdeco);
+        return clients;
     }
 }
