@@ -129,7 +129,7 @@ public class Client implements Serializable, Parcelable{
             new Parcelable.Creator<Client>() {
                 @Override
                 public Client createFromParcel(Parcel source) {
-                    return new Client(source);
+                    return new Client(source);   
                 }
 
                 @Override
