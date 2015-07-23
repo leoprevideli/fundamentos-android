@@ -1,15 +1,30 @@
 package com.example.administrador.myapplication.model.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.administrador.myapplication.model.persistence.MemoryClientRepository;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Client {
+public class Client implements Serializable, Parcelable{
 
     private String name;
     private Integer age;
     private String phone;
     private String address;
+
+    public Client(){
+        super();
+    }
+
+    public Client(Parcel in){
+        super();
+
+        readToParcel(in);
+    }
+
 
     public String getName() {
         return name;
@@ -66,15 +81,6 @@ public class Client {
         return result;
     }
 
-    public void save() {
-        MemoryClientRepository.getInstance().save(this);
-    }
-
-    public static List<Client> getAll() {
-        return MemoryClientRepository.getInstance().getAll();
-
-    }
-
     @Override
     public String toString() {
         return "Client{" +
@@ -84,4 +90,52 @@ public class Client {
                 ", address='" + address + '\'' +
                 '}';
     }
+
+    public void save() {
+        MemoryClientRepository.getInstance().save(this);
+    }
+
+    public static List<Client> getAll() {
+        return MemoryClientRepository.getInstance().getAll();
+
+    }
+
+    public void delete() {
+        MemoryClientRepository.getInstance().delete(this);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name == null ? "" : name);
+        dest.writeString(phone == null ? "" : phone);
+        dest.writeInt(age == null ? -1 : age);
+        dest.writeString(address == null ? "" : address);
+    }
+
+    private void readToParcel(Parcel in) {
+        name = in.readString();
+        phone = in.readString();
+        int partialAge = in.readInt();
+        age = partialAge == 1 ? null : partialAge;
+        address = in.readString();
+    }
+
+    public static final Parcelable.Creator<Client> CREATOR =
+            new Parcelable.Creator<Client>() {
+                @Override
+                public Client createFromParcel(Parcel source) {
+                    return new Client(source);
+                }
+
+                @Override
+                public Client[] newArray(int size) {
+                    return new Client[size];
+                }
+            };
+
 }

@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent goToMainActivity = new Intent(LoginActivity.this, MainActivity.class);
+                Intent goToMainActivity = new Intent(LoginActivity.this, ClientListActivity.class);
 
                 startActivity(goToMainActivity);
 

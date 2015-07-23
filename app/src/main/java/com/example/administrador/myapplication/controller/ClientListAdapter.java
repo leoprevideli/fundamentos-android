@@ -50,4 +50,8 @@ public class ClientListAdapter extends BaseAdapter{
 
         return view;
     }
+
+    public void setClients(List<Client> clients) {
+        this.clientList = clients;
+    }
 }
