@@ -16,4 +16,8 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="remove_message">Client removed!</string>
+    <string name="confirm_progress">Are you sure?</string>
+    <string name="title_confirm">Confirm</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
