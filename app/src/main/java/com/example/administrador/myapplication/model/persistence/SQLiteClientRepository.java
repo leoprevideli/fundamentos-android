@@ -51,7 +51,6 @@ public class SQLiteClientRepository implements ClientRepository {
     @Override
     public List<Client> getAll() {
 
-
         DatabaseHelper helper = new DatabaseHelper(AppUtil.CONTEXT);
         SQLiteDatabase db = helper.getReadableDatabase();
 
