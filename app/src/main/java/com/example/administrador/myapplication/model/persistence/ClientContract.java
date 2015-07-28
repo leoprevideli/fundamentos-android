@@ -14,9 +14,14 @@ public class ClientContract {
     public static final String NAME = "name";
     public static final String AGE = "age";
     public static final String PHONE = "phone";
-    public static final String ADDRESS = "address";
+    public static final String ZIP = "zip";
+    public static final String STREET = "street";
+    public static final String STREET_NAME = "street_name";
+    public static final String NEIGHBORHOOD = "neighborhood";
+    public static final String CITY = "city";
+    public static final String STATE = "state";
     public static final String ID = "id";
-    public static final String[] COLUMNS = { ID, NAME, AGE, PHONE, ADDRESS };
+    public static final String[] COLUMNS = { ID, NAME, AGE, PHONE, ZIP, STREET, STREET_NAME, NEIGHBORHOOD, CITY, STATE };
 
     public static String getSqlCreateTable(){
         StringBuilder sql = new StringBuilder();
@@ -27,7 +32,12 @@ public class ClientContract {
         sql.append(NAME + " TEXT, ");
         sql.append(AGE + " INTEGER, ");
         sql.append(PHONE + " TEXT, ");
-        sql.append(ADDRESS + " TEXT ");
+        sql.append(ZIP + " TEXT, ");
+        sql.append(STREET + " TEXT, ");
+        sql.append(STREET_NAME + " TEXT, ");
+        sql.append(NEIGHBORHOOD + " TEXT, ");
+        sql.append(CITY + " TEXT, ");
+        sql.append(STATE + " TEXT ");
         sql.append(" ); ");
         return sql.toString();
     }
@@ -38,7 +48,12 @@ public class ClientContract {
         values.put(ClientContract.NAME, client.getName());
         values.put(ClientContract.AGE, client.getAge());
         values.put(ClientContract.PHONE, client.getPhone());
-        values.put(ClientContract.ADDRESS, client.getAddress());
+        values.put(ClientContract.ZIP, client.getZip());
+        values.put(ClientContract.STREET, client.getStreet());
+        values.put(ClientContract.STREET_NAME, client.getStreetName());
+        values.put(ClientContract.NEIGHBORHOOD, client.getNeighborhood());
+        values.put(ClientContract.CITY, client.getCity());
+        values.put(ClientContract.STATE, client.getState());
 
         return  values;
     }
@@ -50,7 +65,13 @@ public class ClientContract {
             client.setName(cursor.getString(cursor.getColumnIndex(ClientContract.NAME)));
             client.setAge(cursor.getInt(cursor.getColumnIndex(ClientContract.AGE)));
             client.setPhone(cursor.getString(cursor.getColumnIndex(ClientContract.PHONE)));
-            client.setAddress(cursor.getString(cursor.getColumnIndex(ClientContract.ADDRESS)));
+            client.setZip(cursor.getString(cursor.getColumnIndex(ClientContract.ZIP)));
+            client.setStreet(cursor.getString(cursor.getColumnIndex(ClientContract.STREET)));
+            client.setStreetName(cursor.getString(cursor.getColumnIndex(ClientContract.STREET_NAME)));
+            client.setNeighborhood(cursor.getString(cursor.getColumnIndex(ClientContract.NEIGHBORHOOD)));
+            client.setCity(cursor.getString(cursor.getColumnIndex(ClientContract.CITY)));
+            client.setState(cursor.getString(cursor.getColumnIndex(ClientContract.STATE)));
+
             return client;
         }
         return null;

@@ -22,4 +22,10 @@
     <string name="no">No</string>
     <string name="cep">CEP</string>
     <string name="find">Find</string>
+    <string name="street">Street</string>
+    <string name="street_name">Street Name</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="loading">Loading...</string>
 </resources>

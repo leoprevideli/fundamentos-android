@@ -16,7 +16,12 @@ public class Client implements Serializable, Parcelable{
     private String name;
     private Integer age;
     private String phone;
-    private String address;
+    private String zip;
+    private String street;
+    private String streetName;
+    private String neighborhood;
+    private String city;
+    private String state;
 
     public Client(){
         super();
@@ -32,7 +37,7 @@ public class Client implements Serializable, Parcelable{
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -60,12 +65,52 @@ public class Client implements Serializable, Parcelable{
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
+    public String getZip() {
+        return zip;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override
@@ -79,7 +124,14 @@ public class Client implements Serializable, Parcelable{
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
         if (age != null ? !age.equals(client.age) : client.age != null) return false;
         if (phone != null ? !phone.equals(client.phone) : client.phone != null) return false;
-        return !(address != null ? !address.equals(client.address) : client.address != null);
+        if (zip != null ? !zip.equals(client.zip) : client.zip != null) return false;
+        if (street != null ? !street.equals(client.street) : client.street != null) return false;
+        if (streetName != null ? !streetName.equals(client.streetName) : client.streetName != null)
+            return false;
+        if (neighborhood != null ? !neighborhood.equals(client.neighborhood) : client.neighborhood != null)
+            return false;
+        if (city != null ? !city.equals(client.city) : client.city != null) return false;
+        return !(state != null ? !state.equals(client.state) : client.state != null);
 
     }
 
@@ -89,7 +141,12 @@ public class Client implements Serializable, Parcelable{
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (age != null ? age.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (zip != null ? zip.hashCode() : 0);
+        result = 31 * result + (street != null ? street.hashCode() : 0);
+        result = 31 * result + (streetName != null ? streetName.hashCode() : 0);
+        result = 31 * result + (neighborhood != null ? neighborhood.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
         return result;
     }
 
@@ -100,11 +157,16 @@ public class Client implements Serializable, Parcelable{
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
+                ", zip='" + zip + '\'' +
+                ", street='" + street + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", neighborhood='" + neighborhood + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
                 '}';
     }
 
-    public void save() {
+        public void save() {
         SQLiteClientRepository.getInstance().save(this);
     }
 
@@ -126,19 +188,29 @@ public class Client implements Serializable, Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id == null ? -1 : id);
         dest.writeString(name == null ? "" : name);
-        dest.writeString(phone == null ? "" : phone);
         dest.writeInt(age == null ? -1 : age);
-        dest.writeString(address == null ? "" : address);
+        dest.writeString(phone == null ? "" : phone);
+        dest.writeString(zip == null ? "" : zip);
+        dest.writeString(street == null ? "" : street);
+        dest.writeString(streetName == null ? "" : streetName);
+        dest.writeString(neighborhood == null ? "" : neighborhood);
+        dest.writeString(city == null ? "" : city);
+        dest.writeString(state == null ? "" : state);
     }
 
     private void readToParcel(Parcel in) {
         int partialId = in.readInt();
         id = partialId == -1 ? null : partialId;
         name = in.readString();
-        phone = in.readString();
         int partialAge = in.readInt();
         age = partialAge == -1 ? null : partialAge;
-        address = in.readString();
+        phone = in.readString();
+        zip = in.readString();
+        street = in.readString();
+        streetName = in.readString();
+        neighborhood = in.readString();
+        city = in.readString();
+        state = in.readString();
     }
 
     public static final Parcelable.Creator<Client> CREATOR =

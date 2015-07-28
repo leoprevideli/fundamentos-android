@@ -23,4 +23,10 @@
     <string name="no">Não</string>
     <string name="cep">CEP</string>
     <string name="find">Pesquisar</string>
+    <string name="street">Tipo Logradouro</string>
+    <string name="street_name">Logradouro</string>
+    <string name="neighborhood">Bairro</string>
+    <string name="city">Cidade</string>
+    <string name="state">Estado</string>
+    <string name="loading">Carregando...</string>
 </resources>

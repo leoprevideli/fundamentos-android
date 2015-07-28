@@ -14,7 +14,6 @@ import java.util.List;
 public class SQLiteClientRepository implements ClientRepository {
 
     private static SQLiteClientRepository singletonInstance;
-    private ArrayList<Client> clients;
 
     private SQLiteClientRepository(){
         super();

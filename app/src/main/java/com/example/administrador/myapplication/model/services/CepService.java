@@ -42,11 +42,9 @@ public final class CepService {
 
             conn.disconnect(); // Desconecta do servidor
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return address;
     }
