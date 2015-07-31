@@ -1,13 +1,13 @@
-package com.example.administrador.myapplication.model.persistence;
+package com.example.administrador.myapplication.model.persistence.client;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.administrador.myapplication.model.entities.Client;
+import com.example.administrador.myapplication.model.persistence.DatabaseHelper;
 import com.example.administrador.myapplication.util.AppUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

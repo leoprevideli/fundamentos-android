@@ -1,4 +1,4 @@
-package com.example.administrador.myapplication.model.persistence;
+package com.example.administrador.myapplication.model.persistence.client;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -20,8 +20,10 @@ public class ClientContract {
     public static final String NEIGHBORHOOD = "neighborhood";
     public static final String CITY = "city";
     public static final String STATE = "state";
+    public static final String GENRE = "genre";
+    public static final String MONEY = "money";
     public static final String ID = "id";
-    public static final String[] COLUMNS = { ID, NAME, AGE, PHONE, ZIP, STREET, STREET_NAME, NEIGHBORHOOD, CITY, STATE };
+    public static final String[] COLUMNS = { ID, NAME, AGE, PHONE, ZIP, STREET, STREET_NAME, NEIGHBORHOOD, CITY, STATE, GENRE, MONEY };
 
     public static String getSqlCreateTable(){
         StringBuilder sql = new StringBuilder();
@@ -37,7 +39,9 @@ public class ClientContract {
         sql.append(STREET_NAME + " TEXT, ");
         sql.append(NEIGHBORHOOD + " TEXT, ");
         sql.append(CITY + " TEXT, ");
-        sql.append(STATE + " TEXT ");
+        sql.append(STATE + " TEXT, ");
+        sql.append(GENRE + " INTEGER, ");
+        sql.append(MONEY + " INTEGER ");
         sql.append(" ); ");
         return sql.toString();
     }
@@ -54,6 +58,8 @@ public class ClientContract {
         values.put(ClientContract.NEIGHBORHOOD, client.getNeighborhood());
         values.put(ClientContract.CITY, client.getCity());
         values.put(ClientContract.STATE, client.getState());
+        values.put(ClientContract.GENRE, client.isGenre());
+        values.put(ClientContract.MONEY, client.isDebt());
 
         return  values;
     }
@@ -71,6 +77,8 @@ public class ClientContract {
             client.setNeighborhood(cursor.getString(cursor.getColumnIndex(ClientContract.NEIGHBORHOOD)));
             client.setCity(cursor.getString(cursor.getColumnIndex(ClientContract.CITY)));
             client.setState(cursor.getString(cursor.getColumnIndex(ClientContract.STATE)));
+            client.setGenre(cursor.getInt(cursor.getColumnIndex(ClientContract.GENRE)) > 0);
+            client.setDebt(cursor.getInt(cursor.getColumnIndex(ClientContract.MONEY)) > 0);
 
             return client;
         }

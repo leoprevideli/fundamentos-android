@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.administrador.myapplication.model.persistence.client.ClientContract;
+import com.example.administrador.myapplication.model.persistence.user.UserContract;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String BANCO_DADOS = "MY_DATABASE";
@@ -17,6 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ClientContract.getSqlCreateTable());
+        db.execSQL(UserContract.getSqlCreateTable());
+        db.execSQL(UserContract.insertIntoUserTable());
     }
 
     @Override

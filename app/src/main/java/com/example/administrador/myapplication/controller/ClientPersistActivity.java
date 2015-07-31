@@ -17,7 +17,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.administrador.myapplication.R;
@@ -40,9 +43,8 @@ public class ClientPersistActivity extends AppCompatActivity {
     private EditText editTextBairro;
     private EditText editTextCidade;
     private EditText editTextEstado;
-
-    private Button buttonFindCep;
-
+    private Switch switchGenre;
+    private CheckBox chkDebtor;
 
 
     @Override
@@ -78,13 +80,40 @@ public class ClientPersistActivity extends AppCompatActivity {
         editTextAge = (EditText) findViewById(R.id.editTextAge);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
         editTextCep = (EditText) findViewById(R.id.editTextCep);
+        editTextCep.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_search, 0);
+        editTextCep.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editTextCep.getRight() - editTextCep.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if (FormHelper.requireValidate(ClientPersistActivity.this, editTextCep)) {
+                            {
+                                new GetAddressByCep().execute(editTextCep.getText().toString());
+                            }
+                        }
+
+                    }
+                }
+                return false;
+            }
+        });
+
         editTextTipoLogradouro = (EditText) findViewById(R.id.editTextTipoLogradouro);
         editTextLogradouro = (EditText) findViewById(R.id.editTextLogradouro);
         editTextBairro = (EditText) findViewById(R.id.editTextBairro);
         editTextCidade = (EditText) findViewById(R.id.editTextCidade);
         editTextEstado = (EditText) findViewById(R.id.editTextEstado);
+        switchGenre = (Switch) findViewById(R.id.swtGenre);
+        switchGenre.setTextOn("Masculino");
+        switchGenre.setTextOff("Feminino");
+        chkDebtor = (CheckBox) findViewById(R.id.chkDebtor);
 
-        bindButtonFindCep();
+
     }
 
     /**
@@ -110,19 +139,12 @@ public class ClientPersistActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.d("TAG", "Unexpected error");
                 }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    private void bindButtonFindCep() {
-        buttonFindCep = (Button) findViewById(R.id.buttonFindCep);
-        buttonFindCep.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                new GetAddressByCep().execute(editTextCep.getText().toString());
-            }
-        });
+
+             }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void getParameters() {
@@ -173,6 +195,20 @@ public class ClientPersistActivity extends AppCompatActivity {
         client.setNeighborhood(editTextBairro.getText().toString());
         client.setCity(editTextCidade.getText().toString());
         client.setState(editTextEstado.getText().toString());
+        if(switchGenre.isChecked()){
+            client.setGenre(true);
+        }
+        else{
+            client.setGenre(false);
+        }
+
+        if(chkDebtor.isChecked()){
+            client.setDebt(true);
+        }
+        else{
+            client.setDebt(false);
+        }
+
 
     }
 
@@ -186,7 +222,12 @@ public class ClientPersistActivity extends AppCompatActivity {
         editTextBairro.setText(client.getNeighborhood());
         editTextCidade.setText(client.getCity());
         editTextEstado.setText(client.getState());
-
+        if(client.isGenre() == true){
+            switchGenre.setChecked(true);
+        }
+        if(client.isDebt() == true){
+            chkDebtor.setChecked(true);
+        }
     }
 
     private class GetAddressByCep extends AsyncTask<String, Void, ClientAddress>{ //Metodo recebe um PARAM e retorna um RESULT
@@ -202,7 +243,12 @@ public class ClientPersistActivity extends AppCompatActivity {
 
         @Override
         protected ClientAddress doInBackground(String... params) {
-            return CepService.getAddressBy(params[0]);
+            try {
+                return CepService.getAddressBy(params[0]);
+            }catch(Exception e){
+                Toast.makeText(ClientPersistActivity.this, "CEP inválido!", Toast.LENGTH_LONG).show();
+            }
+            return null;
         }
 
         @Override

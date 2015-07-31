@@ -1,4 +1,4 @@
-package com.example.administrador.myapplication.model.persistence;
+package com.example.administrador.myapplication.model.persistence.client;
 
 import com.example.administrador.myapplication.model.entities.Client;
 

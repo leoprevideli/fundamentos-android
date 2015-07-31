@@ -29,4 +29,7 @@
     <string name="state">State</string>
     <string name="loading">Loading...</string>
     <string name="share">Share</string>
+    <string name="invalidLogin">Wrong username or password!</string>
+    <string name="genre">Genre</string>
+    <string name="debtor">Debtor?</string>
 </resources>

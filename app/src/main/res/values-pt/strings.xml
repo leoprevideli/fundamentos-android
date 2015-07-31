@@ -30,4 +30,7 @@
     <string name="state">Estado</string>
     <string name="loading">Carregando...</string>
     <string name="share">Compartilhar</string>
+    <string name="invalidLogin">Usuário ou senha inválido!</string>
+    <string name="genre">Genero</string>
+    <string name="debtor">Devedor?</string>
 </resources>

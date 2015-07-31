@@ -3,11 +3,9 @@ package com.example.administrador.myapplication.model.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.administrador.myapplication.model.persistence.MemoryClientRepository;
-import com.example.administrador.myapplication.model.persistence.SQLiteClientRepository;
+import com.example.administrador.myapplication.model.persistence.client.SQLiteClientRepository;
 
 import java.io.Serializable;
-import java.sql.SQLClientInfoException;
 import java.util.List;
 
 public class Client implements Serializable, Parcelable{
@@ -22,6 +20,8 @@ public class Client implements Serializable, Parcelable{
     private String neighborhood;
     private String city;
     private String state;
+    private boolean genre;
+    private boolean debt;
 
     public Client(){
         super();
@@ -113,6 +113,22 @@ public class Client implements Serializable, Parcelable{
         this.state = state;
     }
 
+    public boolean isGenre() {
+        return genre;
+    }
+
+    public void setGenre(boolean genre) {
+        this.genre = genre;
+    }
+
+    public boolean isDebt() {
+        return debt;
+    }
+
+    public void setDebt(boolean debt) {
+        this.debt = debt;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,6 +136,8 @@ public class Client implements Serializable, Parcelable{
 
         Client client = (Client) o;
 
+        if (genre != client.genre) return false;
+        if (debt != client.debt) return false;
         if (id != null ? !id.equals(client.id) : client.id != null) return false;
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
         if (age != null ? !age.equals(client.age) : client.age != null) return false;
@@ -147,6 +165,8 @@ public class Client implements Serializable, Parcelable{
         result = 31 * result + (neighborhood != null ? neighborhood.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (genre ? 1 : 0);
+        result = 31 * result + (debt ? 1 : 0);
         return result;
     }
 
@@ -163,10 +183,12 @@ public class Client implements Serializable, Parcelable{
                 ", neighborhood='" + neighborhood + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
+                ", genre=" + genre +
+                ", debt=" + debt +
                 '}';
     }
 
-        public void save() {
+    public void save() {
         SQLiteClientRepository.getInstance().save(this);
     }
 
@@ -196,6 +218,8 @@ public class Client implements Serializable, Parcelable{
         dest.writeString(neighborhood == null ? "" : neighborhood);
         dest.writeString(city == null ? "" : city);
         dest.writeString(state == null ? "" : state);
+        dest.writeByte((byte) (genre ? 1 : 0));
+        dest.writeByte((byte) (debt ? 1 : 0));
     }
 
     private void readToParcel(Parcel in) {
@@ -211,6 +235,8 @@ public class Client implements Serializable, Parcelable{
         neighborhood = in.readString();
         city = in.readString();
         state = in.readString();
+        genre = in.readByte() != 0;
+        debt = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<Client> CREATOR =
